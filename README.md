@@ -31,7 +31,7 @@ pub fn setup_ratelimiter() -> RateLimiter {
 }
 ```
 
-Iteract with your KV-backed ratelimits like this:
+Interact with your KV-backed ratelimits like this:
 
 ```rust
 let ratelimits = setup_ratelimiter();
