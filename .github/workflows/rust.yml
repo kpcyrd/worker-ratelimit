@@ -19,11 +19,10 @@ jobs:
       matrix:
         os: [ubuntu-22.04, macos-latest, windows-latest]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up cargo cache
-      uses: actions/cache@v3
-      continue-on-error: false
+      uses: actions/cache@v4
       with:
         path: |
           ~/.cargo/bin/
@@ -31,11 +30,17 @@ jobs:
           ~/.cargo/registry/cache/
           ~/.cargo/git/db/
           target/
-        key: ${{ runner.os }}-cargo-debug-${{ hashFiles('**/Cargo.lock') }}
-        restore-keys: ${{ runner.os }}-cargo-debug-
+        key: ${{ runner.os }}-cargo-wasm-${{ hashFiles('**/Cargo.lock') }}
+        restore-keys: ${{ runner.os }}-cargo-wasm-
+
+    - name: Install wasm32 target
+      run: rustup target add wasm32-unknown-unknown
 
     - name: Build
-      run: cargo build --verbose
+      run: cargo build --verbose --target wasm32-unknown-unknown
+
+    - name: Build (--no-default-features)
+      run: cargo build --verbose --no-default-features --target wasm32-unknown-unknown
 
   unit-test:
     runs-on: ${{ matrix.os }}
@@ -44,11 +49,10 @@ jobs:
       matrix:
         os: [ubuntu-22.04, macos-latest, windows-latest]
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up cargo cache
-      uses: actions/cache@v3
-      continue-on-error: false
+      uses: actions/cache@v4
       with:
         path: |
           ~/.cargo/bin/
@@ -67,6 +71,6 @@ jobs:
   fmt:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Run cargo fmt
       run: cargo fmt --all -- --check
