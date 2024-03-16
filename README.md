@@ -5,9 +5,9 @@
 [docs-img]:     https://docs.rs/worker-ratelimit/badge.svg
 [docs]:         https://docs.rs/worker-ratelimit
 
-This is a general purpose rate limiting library for Cloudflare Workers. It builds on top of Cloudflare Workers KV for storage.
+This is a general purpose rate limiting library for [Cloudflare Workers](https://github.com/cloudflare/workers-rs). It builds on top of [Cloudflare Workers KV](https://developers.cloudflare.com/kv/) for storage.
 
-This library is meant to compile to WebAssembly and execute on Cloudflare's serverless plattform. Please note, this is not an official Cloudflare project and implements rate-limiting non-atomically, on best-effort basis, meaning it may fail to count some actions happening in quick succession. Users may be able to go slightly above the configured limits, but once they are reached the limit is effective.
+This library is meant to compile to WebAssembly and execute on [Cloudflare's serverless plattform](https://workers.cloudflare.com/). Please note, this is not an official Cloudflare project and implements rate-limiting non-atomically, on best-effort basis, meaning it may fail to count some actions happening in quick succession. Users may be able to go slightly above the configured limits, but once they are reached the limits are effective. Ratelimiting is implemented with a BTree-based sliding-window algorithm.
 
 This library is meant to work with features available on free-tier. For more serious use definitely also consider the "Security > WAF > Rate limiting rules" settings.
 
