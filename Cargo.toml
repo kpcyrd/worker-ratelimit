@@ -1,6 +1,6 @@
 [package]
 name = "worker-ratelimit"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 description = "General purpose rate limiting library for Cloudflare Workers"
 authors = ["kpcyrd <git@rxv.cc>"]
