@@ -16,5 +16,5 @@ worker-sdk = ["worker"]
 [dependencies]
 serde_json = "1.0.114"
 thiserror = "1.0.58"
-worker = { version = "0.0.23", optional = true }
+worker = { version = "0.1", optional = true }
 worker-kv = "0.6.0"
