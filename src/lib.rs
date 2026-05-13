@@ -1,18 +1,16 @@
 use std::collections::BTreeMap;
 use std::time::Duration;
-#[cfg(feature = "worker-sdk")]
 use worker::Date;
-use worker_kv::KvStore;
+use worker::kv::KvStore;
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
     #[error(transparent)]
-    Storage(#[from] worker_kv::KvError),
+    Storage(#[from] worker::kv::KvError),
     #[error(transparent)]
     Json(#[from] serde_json::Error),
 }
 
-#[cfg(feature = "worker-sdk")]
 impl From<Error> for worker::Error {
     fn from(error: Error) -> Self {
         match error {
@@ -52,7 +50,6 @@ impl Datetime {
     }
 }
 
-#[cfg(feature = "worker-sdk")]
 impl From<&Date> for Datetime {
     fn from(date: &Date) -> Self {
         Self::from_timestamp(date.as_millis() / 1000)
@@ -160,11 +157,6 @@ impl Ticket {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn ensure_compatible_types() {
-        let _: Option<worker_kv::KvStore> = Option::<worker::kv::KvStore>::None;
-    }
 
     #[test]
     fn test_stamp_check_allow_empty() {
